@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'"/>
+  <title>Advanced Cleaning</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div id="app">
+
+  <!-- ── Title Bar ── -->
+  <div id="titlebar">
+    <div id="titlebar-drag">
+      <span id="titlebar-icon">⚙</span>
+      <span id="titlebar-title">Advanced Cleaning</span>
+    </div>
+    <div id="titlebar-controls">
+      <button class="tb-btn" id="btn-min" title="Minimize">&#8722;</button>
+      <button class="tb-btn" id="btn-max" title="Maximize">&#9633;</button>
+      <button class="tb-btn" id="btn-close" title="Close">&#10005;</button>
+    </div>
+  </div>
+
+  <!-- ── Nav ── -->
+  <nav id="sidebar">
+    <button class="nav-btn active" data-page="dashboard">
+      <span class="nav-icon">🏠</span> Dashboard
+    </button>
+    <button class="nav-btn" data-page="cleaner">
+      <span class="nav-icon">🧹</span> Cleaner
+    </button>
+    <button class="nav-btn" data-page="startup">
+      <span class="nav-icon">🚀</span> Startup
+    </button>
+    <button class="nav-btn" data-page="tools">
+      <span class="nav-icon">🔧</span> Tools
+    </button>
+    <button class="nav-btn" data-page="about">
+      <span class="nav-icon">ℹ</span> About
+    </button>
+  </nav>
+
+  <!-- ── Main content ── -->
+  <main id="content">
+
+    <!-- === DASHBOARD === -->
+    <section id="page-dashboard" class="page active">
+      <div class="page-header">
+        <div class="page-header-title">Dashboard</div>
+        <div class="page-header-sub">System overview</div>
+      </div>
+
+      <div class="main-block">
+        <div class="block-header">System Information</div>
+        <div id="sysinfo-grid" class="info-grid">
+          <div class="info-card"><div class="info-label">OS</div><div class="info-value" id="si-os">Loading...</div></div>
+          <div class="info-card"><div class="info-label">Architecture</div><div class="info-value" id="si-arch">—</div></div>
+          <div class="info-card"><div class="info-label">CPU Cores</div><div class="info-value" id="si-cpu">—</div></div>
+          <div class="info-card"><div class="info-label">Hostname</div><div class="info-value" id="si-host">—</div></div>
+          <div class="info-card"><div class="info-label">Uptime</div><div class="info-value" id="si-uptime">—</div></div>
+          <div class="info-card"><div class="info-label">Temp Dir</div><div class="info-value small" id="si-tmp">—</div></div>
+        </div>
+      </div>
+
+      <div class="main-block">
+        <div class="block-header">Memory Usage</div>
+        <div class="mem-row">
+          <div class="mem-info">
+            <span id="mem-used">—</span> GB used of <span id="mem-total">—</span> GB
+          </div>
+          <div class="mem-bar-wrap"><div id="mem-bar" class="mem-bar"></div></div>
+          <div id="mem-pct" class="mem-pct">—%</div>
+        </div>
+      </div>
+
+      <div class="main-block">
+        <div class="block-header">Disk Usage</div>
+        <div id="disk-list"></div>
+      </div>
+
+      <div class="main-block">
+        <div class="block-header">Quick Actions</div>
+        <div class="btn-row">
+          <button class="ore-btn green-btn" id="qa-clean-all">🧹 Quick Clean</button>
+          <button class="ore-btn normal-btn" id="qa-flush-dns">🌐 Flush DNS</button>
+          <button class="ore-btn normal-btn" id="qa-refresh">🔄 Refresh Info</button>
+        </div>
+      </div>
+
+      <!-- Quick clean result -->
+      <div id="quick-result" class="log-box hidden"></div>
+    </section>
+
+    <!-- === CLEANER === -->
+    <section id="page-cleaner" class="page">
+      <div class="page-header">
+        <div class="page-header-title">Cleaner</div>
+        <div class="page-header-sub">Select what to clean</div>
+      </div>
+
+      <div class="main-block">
+        <div class="block-header">Junk Files</div>
+        <div id="clean-items" class="clean-list">
+
+          <div class="clean-item" data-task="tempFiles">
+            <div class="clean-item-left">
+              <div class="ore-checkbox on" data-task="tempFiles"></div>
+              <div class="clean-item-info">
+                <div class="clean-item-name">Temp Files</div>
+                <div class="clean-item-desc">Windows & user temporary files</div>
+              </div>
+            </div>
+            <div class="clean-item-size" id="sz-tempFiles">Calculating...</div>
+          </div>
+
+          <div class="clean-item" data-task="browserCache">
+            <div class="clean-item-left">
+              <div class="ore-checkbox on" data-task="browserCache"></div>
+              <div class="clean-item-info">
+                <div class="clean-item-name">Browser Cache</div>
+                <div class="clean-item-desc">Chrome, Edge, Firefox caches</div>
+              </div>
+            </div>
+            <div class="clean-item-size" id="sz-browserCache">Calculating...</div>
+          </div>
+
+          <div class="clean-item" data-task="recyclebin">
+            <div class="clean-item-left">
+              <div class="ore-checkbox on" data-task="recyclebin"></div>
+              <div class="clean-item-info">
+                <div class="clean-item-name">Recycle Bin</div>
+                <div class="clean-item-desc">Empty all deleted files</div>
+              </div>
+            </div>
+            <div class="clean-item-size" id="sz-recyclebin">Calculating...</div>
+          </div>
+
+          <div class="clean-item" data-task="prefetch">
+            <div class="clean-item-left">
+              <div class="ore-checkbox" data-task="prefetch"></div>
+              <div class="clean-item-info">
+                <div class="clean-item-name">Prefetch</div>
+                <div class="clean-item-desc">Windows prefetch files</div>
+              </div>
+            </div>
+            <div class="clean-item-size" id="sz-prefetch">Calculating...</div>
+          </div>
+
+          <div class="clean-item" data-task="windowsLogs">
+            <div class="clean-item-left">
+              <div class="ore-checkbox" data-task="windowsLogs"></div>
+              <div class="clean-item-info">
+                <div class="clean-item-name">Windows Logs</div>
+                <div class="clean-item-desc">Event logs & system logs</div>
+              </div>
+            </div>
+            <div class="clean-item-size" id="sz-windowsLogs">Calculating...</div>
+          </div>
+
+          <div class="clean-item" data-task="thumbnailCache">
+            <div class="clean-item-left">
+              <div class="ore-checkbox" data-task="thumbnailCache"></div>
+              <div class="clean-item-info">
+                <div class="clean-item-name">Thumbnail Cache</div>
+                <div class="clean-item-desc">Explorer thumbnail databases</div>
+              </div>
+            </div>
+            <div class="clean-item-size" id="sz-thumbnailCache">Calculating...</div>
+          </div>
+
+          <div class="clean-item" data-task="windowsUpdate">
+            <div class="clean-item-left">
+              <div class="ore-checkbox" data-task="windowsUpdate"></div>
+              <div class="clean-item-info">
+                <div class="clean-item-name">Windows Update Cache</div>
+                <div class="clean-item-desc">Downloaded update files</div>
+              </div>
+            </div>
+            <div class="clean-item-size" id="sz-windowsUpdate">Calculating...</div>
+          </div>
+
+          <div class="clean-item" data-task="memoryDumps">
+            <div class="clean-item-left">
+              <div class="ore-checkbox" data-task="memoryDumps"></div>
+              <div class="clean-item-info">
+                <div class="clean-item-name">Memory Dumps</div>
+                <div class="clean-item-desc">Crash dump files</div>
+              </div>
+            </div>
+            <div class="clean-item-size" id="sz-memoryDumps">Calculating...</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="main-block">
+        <div class="block-header">Optimization</div>
+        <div class="clean-list">
+
+          <div class="clean-item" data-task="dns">
+            <div class="clean-item-left">
+              <div class="ore-checkbox on" data-task="dns"></div>
+              <div class="clean-item-info">
+                <div class="clean-item-name">Flush DNS Cache</div>
+                <div class="clean-item-desc">Clear DNS resolver cache</div>
+              </div>
+            </div>
+            <div class="clean-item-size">—</div>
+          </div>
+
+          <div class="clean-item" data-task="ramOptimize">
+            <div class="clean-item-left">
+              <div class="ore-checkbox" data-task="ramOptimize"></div>
+              <div class="clean-item-info">
+                <div class="clean-item-name">Optimize RAM</div>
+                <div class="clean-item-desc">Empty working sets of all processes</div>
+              </div>
+            </div>
+            <div class="clean-item-size">—</div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="btn-row" style="padding:0 16px 16px;">
+        <button class="ore-btn normal-btn" id="btn-select-all">☑ Select All</button>
+        <button class="ore-btn normal-btn" id="btn-deselect-all">☐ Deselect All</button>
+        <button class="ore-btn green-btn" id="btn-start-clean">🧹 Start Cleaning</button>
+      </div>
+
+      <div id="clean-progress" class="hidden">
+        <div class="progress-bar-wrap">
+          <div id="clean-progress-bar" class="progress-bar"></div>
+        </div>
+        <div id="clean-progress-label" class="progress-label">Preparing...</div>
+      </div>
+
+      <div id="clean-log" class="log-box hidden"></div>
+    </section>
+
+    <!-- === STARTUP === -->
+    <section id="page-startup" class="page">
+      <div class="page-header">
+        <div class="page-header-title">Startup Manager</div>
+        <div class="page-header-sub">Manage programs that launch at Windows startup</div>
+      </div>
+
+      <div class="main-block">
+        <div class="block-header">
+          Startup Items
+          <button class="ore-btn normal-btn small-btn" id="btn-refresh-startup" style="float:right;margin:0">🔄 Refresh</button>
+        </div>
+        <div id="startup-list">
+          <div class="loading-msg">Loading startup items...</div>
+        </div>
+      </div>
+
+      <div class="info-banner">
+        ⚠ Removing a startup item from registry is permanent. To re-enable, the program must be reinstalled or re-added manually.
+      </div>
+    </section>
+
+    <!-- === TOOLS === -->
+    <section id="page-tools" class="page">
+      <div class="page-header">
+        <div class="page-header-title">System Tools</div>
+        <div class="page-header-sub">Advanced repair and maintenance utilities</div>
+      </div>
+
+      <div class="tools-grid">
+
+        <div class="tool-card">
+          <div class="tool-card-icon">🛡</div>
+          <div class="tool-card-title">SFC Scan</div>
+          <div class="tool-card-desc">System File Checker — scans and repairs corrupted system files</div>
+          <button class="ore-btn green-btn" id="btn-sfc">Run SFC</button>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-card-icon">🔬</div>
+          <div class="tool-card-title">DISM Repair</div>
+          <div class="tool-card-desc">Restore Windows component store health (requires internet)</div>
+          <button class="ore-btn green-btn" id="btn-dism">Run DISM</button>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-card-icon">💽</div>
+          <div class="tool-card-title">Disk Cleanup</div>
+          <div class="tool-card-desc">Launch Windows built-in Disk Cleanup utility</div>
+          <button class="ore-btn normal-btn" id="btn-diskcleanup">Open Cleanmgr</button>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-card-icon">🌐</div>
+          <div class="tool-card-title">Network Reset</div>
+          <div class="tool-card-desc">Flush DNS, reset Winsock and IP stack (restart may be needed)</div>
+          <button class="ore-btn normal-btn" id="btn-netreset">Reset Network</button>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-card-icon">⚡</div>
+          <div class="tool-card-title">RAM Optimizer</div>
+          <div class="tool-card-desc">Free unused memory by emptying process working sets</div>
+          <button class="ore-btn normal-btn" id="btn-ramopt">Optimize RAM</button>
+        </div>
+
+        <div class="tool-card">
+          <div class="tool-card-icon">📋</div>
+          <div class="tool-card-title">Event Viewer</div>
+          <div class="tool-card-desc">Open Windows Event Viewer</div>
+          <button class="ore-btn normal-btn" id="btn-eventvwr">Open</button>
+        </div>
+
+      </div>
+
+      <div id="tool-log" class="log-box hidden" style="margin:16px"></div>
+    </section>
+
+    <!-- === ABOUT === -->
+    <section id="page-about" class="page">
+      <div class="page-header">
+        <div class="page-header-title">About</div>
+        <div class="page-header-sub">Advanced Cleaning v1.0.0</div>
+      </div>
+
+      <div class="main-block" style="text-align:center;padding:32px 16px">
+        <div style="font-size:64px;margin-bottom:16px">⚙</div>
+        <div class="about-title">Advanced Cleaning</div>
+        <div class="about-version">Version 1.0.0</div>
+        <div class="about-desc">
+          A lightweight Windows system cleaner and optimizer.<br/>
+          Built with Electron + OreUI design system.
+        </div>
+        <div class="btn-row" style="justify-content:center;margin-top:24px">
+          <button class="ore-btn normal-btn" id="btn-github">⭐ GitHub</button>
+        </div>
+      </div>
+
+      <div class="main-block">
+        <div class="block-header">Features</div>
+        <div class="feature-list">
+          <div class="feature-item"><span class="feature-dot green"></span>Temp & Browser Cache Cleaning</div>
+          <div class="feature-item"><span class="feature-dot green"></span>Recycle Bin, Prefetch, Logs</div>
+          <div class="feature-item"><span class="feature-dot green"></span>Windows Update Cache</div>
+          <div class="feature-item"><span class="feature-dot green"></span>Memory Dump Cleaning</div>
+          <div class="feature-item"><span class="feature-dot green"></span>DNS Flush & RAM Optimization</div>
+          <div class="feature-item"><span class="feature-dot green"></span>Startup Manager</div>
+          <div class="feature-item"><span class="feature-dot green"></span>SFC & DISM System Repair</div>
+          <div class="feature-item"><span class="feature-dot green"></span>Network Stack Reset</div>
+        </div>
+      </div>
+
+      <div class="main-block">
+        <div class="block-header">UI Based On</div>
+        <div class="about-desc" style="padding:8px 16px">
+          <strong>OreUI</strong> by Spectrollay — Minecraft Bedrock-inspired web UI framework.<br/>
+          <a href="#" id="link-oreui">github.com/Spectrollay-OreUI/OreUI</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ── Toast notification ── -->
+<div id="toast-area"></div>
+
+<script src="renderer.js"></script>
+</body>
+</html>
