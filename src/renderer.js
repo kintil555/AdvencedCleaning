@@ -88,7 +88,11 @@ async function loadDashboard() {
   const dl = document.getElementById('disk-list');
   dl.innerHTML = '';
   if (!disks.length) {
-    dl.innerHTML = '<div style="padding:12px 16px;color:#B1B2B5">No disk data available (requires Windows)</div>';
+    dl.innerHTML = `<div class="empty-state">
+        <img src="images/Building.png" alt="no data"/>
+        <div class="empty-state-text">No disk data available</div>
+        <div class="empty-state-sub">Requires Windows with WMIC support</div>
+      </div>`;
   } else {
     disks.forEach(d => {
       const el = document.createElement('div');
@@ -216,11 +220,15 @@ document.getElementById('btn-start-clean').addEventListener('click', async () =>
 // ═══════════════════════════════════════════════════════════════════
 async function loadStartupItems() {
   const list = document.getElementById('startup-list');
-  list.innerHTML = '<div class="loading-msg">Loading startup items...</div>';
+  list.innerHTML = '<div class="loading-state"><img src="images/Loading.gif" alt="loading"/><span>Loading startup items...</span></div>';
   const items = await window.api.getStartupItems();
   list.innerHTML = '';
   if (!items.length) {
-    list.innerHTML = '<div class="loading-msg">No startup items found or access denied (try running as Administrator)</div>';
+    list.innerHTML = `<div class="empty-state">
+        <img src="images/Building.png" alt="empty"/>
+        <div class="empty-state-text">No startup items found</div>
+        <div class="empty-state-sub">Try running as Administrator for full access</div>
+      </div>`;
     return;
   }
   items.forEach(item => {

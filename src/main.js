@@ -147,9 +147,12 @@ ipcMain.handle('estimate-sizes', async () => {
   const results = {};
   for (const [key, script] of Object.entries(scripts)) {
     try {
-      const r = await new Promise((res, rej) => {
-        exec(`powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "${script.replace(/"/g, '\\"').replace(/\n/g, ' ')}"`,
+      const r = await new Promise((res) => {
+        const tmpF = path.join(os.tmpdir(), `ac_sz_${key}.ps1`);
+        try { fs.writeFileSync(tmpF, script, 'utf8'); } catch { res('0'); return; }
+        exec(`powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "${tmpF}"`,
           { timeout: 15000 }, (err, stdout) => {
+            try { fs.unlinkSync(tmpF); } catch {}
             if (err) res('0');
             else res(stdout.trim() || '0');
           });
@@ -280,28 +283,37 @@ Write-Output "RAM Optimize: Done"`,
 // ── Startup manager ───────────────────────────────────────────────────────────
 ipcMain.handle('get-startup-items', async () => {
   return new Promise(resolve => {
-    const script = `
-$items = @()
-$regPaths = @(
-  "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
-  "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
-  "HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run"
-)
-foreach ($rp in $regPaths) {
-  if (Test-Path $rp) {
-    $props = Get-ItemProperty -Path $rp -ErrorAction SilentlyContinue
-    $props.PSObject.Properties | Where-Object { $_.Name -notmatch '^PS' } | ForEach-Object {
-      $items += [PSCustomObject]@{ Name=$_.Name; Path=$_.Value; Location=$rp; Enabled=$true }
-    }
-  }
-}
-$items | ConvertTo-Json -Depth 3 -Compress
-`;
-    exec(`powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -Command "${script.replace(/\n/g, ' ').replace(/"/g, '\\"')}"`,
-      { timeout: 10000 }, (err, stdout) => {
-        if (err || !stdout.trim()) { resolve([]); return; }
+    // Write script to temp file to avoid quote-escaping issues
+    const tmpScript = path.join(os.tmpdir(), 'ac_startup_query.ps1');
+    const script = [
+      '$items = @()',
+      '$regPaths = @(',
+      '  "HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",',
+      '  "HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",',
+      '  "HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Run"',
+      ')',
+      'foreach ($rp in $regPaths) {',
+      '  if (Test-Path $rp) {',
+      '    $props = Get-ItemProperty -Path $rp -ErrorAction SilentlyContinue',
+      '    $props.PSObject.Properties | Where-Object { $_.Name -notmatch "^PS" } | ForEach-Object {',
+      '      $items += [PSCustomObject]@{ Name=$_.Name; Path=$_.Value; Location=$rp; Enabled=$true }',
+      '    }',
+      '  }',
+      '}',
+      'if ($items.Count -gt 0) { $items | ConvertTo-Json -Depth 3 -Compress }',
+      'else { Write-Output "[]" }',
+    ].join('\n');
+
+    try { fs.writeFileSync(tmpScript, script, 'utf8'); } catch(e) { resolve([]); return; }
+
+    exec(`powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File "${tmpScript}"`,
+      { timeout: 15000 }, (err, stdout, stderr) => {
+        try { fs.unlinkSync(tmpScript); } catch {}
+        if (err) { resolve([]); return; }
+        const out = stdout.trim();
+        if (!out || out === '[]') { resolve([]); return; }
         try {
-          const data = JSON.parse(stdout.trim());
+          const data = JSON.parse(out);
           resolve(Array.isArray(data) ? data : [data]);
         } catch { resolve([]); }
       });

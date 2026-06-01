@@ -1,3 +1,12 @@
+/* ─── OreUI Fonts ───────────────────────────────────────────────────── */
+@font-face { font-family: 'Minecraft Ten';       src: url('fonts/Minecraft-Ten.otf') format('opentype'); }
+@font-face { font-family: 'Minecraft Seven';     src: url('fonts/Minecraft-Seven.otf') format('opentype'); }
+@font-face { font-family: 'Minecraft Five Bold'; src: url('fonts/Minecraft-Five-Bold.otf') format('opentype'); }
+@font-face { font-family: 'Minecraft Five';      src: url('fonts/Minecraft-Five.otf') format('opentype'); }
+@font-face { font-family: 'NotoSans Bold';       src: url('fonts/NotoSans-Bold.ttf') format('truetype'); }
+@font-face { font-family: 'NotoSans BoldItalic'; src: url('fonts/NotoSans-BoldItalic.ttf') format('truetype'); }
+@font-face { font-family: 'NotoSans Italic';     src: url('fonts/NotoSans-Italic.ttf') format('truetype'); }
+
 /* ─── Reset & Base ─────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -25,7 +34,7 @@
   --titlebar-h:36px;
 }
 
-html, body { height: 100%; font-family: 'Segoe UI', sans-serif; font-size: 14px; color: var(--text); background: var(--bg); overflow: hidden; user-select: none; }
+html, body { height: 100%; font-family: 'NotoSans Bold', 'Segoe UI', sans-serif; font-size: 14px; color: var(--text); background: var(--bg); overflow: hidden; user-select: none; }
 
 /* ─── App Layout ───────────────────────────────────────────────────── */
 #app { display: flex; flex-direction: column; height: 100vh; }
@@ -142,7 +151,7 @@ html, body { height: 100%; font-family: 'Segoe UI', sans-serif; font-size: 14px;
 /* ─── Buttons ──────────────────────────────────────────────────────── */
 .btn-row { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 16px; }
 .ore-btn {
-  cursor: pointer; font-family: 'Segoe UI', sans-serif; font-weight: bold;
+  cursor: pointer; font-family: 'NotoSans Bold', 'Segoe UI', sans-serif; font-weight: bold;
   height: 40px; padding: 0 16px; border: 2px solid var(--bg-darker);
   display: flex; align-items: center; gap: 6px;
   transition: background .1s, box-shadow .1s;
@@ -277,3 +286,30 @@ html, body { height: 100%; font-family: 'Segoe UI', sans-serif; font-size: 14px;
 
 /* ─── Utilities ────────────────────────────────────────────────────── */
 .hidden { display: none !important; }
+
+/* ─── OreUI Font Usage ──────────────────────────────────────────────── */
+.page-header-title  { font-family: 'Minecraft Seven', 'NotoSans Bold', sans-serif; }
+.block-header       { font-family: 'NotoSans Bold', sans-serif; }
+#titlebar-title     { font-family: 'Minecraft Ten', 'NotoSans Bold', sans-serif; font-size: 18px; }
+.about-title        { font-family: 'Minecraft Seven', sans-serif; }
+.tool-card-title    { font-family: 'NotoSans Bold', sans-serif; }
+.clean-item-name    { font-family: 'NotoSans Bold', sans-serif; }
+.nav-btn            { font-family: 'NotoSans Bold', sans-serif; }
+.startup-item-name  { font-family: 'NotoSans Bold', sans-serif; }
+
+/* ─── Empty State / OreUI Images ───────────────────────────────────── */
+.empty-state {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 32px 16px; gap: 12px; text-align: center;
+}
+.empty-state img   { width: 200px; opacity: 0.85; image-rendering: pixelated; }
+.empty-state-text  { font-family: 'NotoSans Bold', sans-serif; font-size: 16px; color: var(--text-muted); }
+.empty-state-sub   { font-size: 13px; color: #8C8D90; margin-top: 4px; }
+
+/* Loading spinner */
+.loading-state {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; padding: 32px; gap: 12px;
+}
+.loading-state img  { width: 48px; }
+.loading-state span { font-size: 14px; color: var(--text-muted); font-family: 'NotoSans Bold', sans-serif; }
