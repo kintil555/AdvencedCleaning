@@ -65,14 +65,29 @@ function appendLog(box, data) {
 //  DASHBOARD
 // ═══════════════════════════════════════════════════════════════════
 async function loadDashboard() {
-  // System info
+  // System info — accurate via WMI
   const si = await window.api.getSystemInfo();
-  document.getElementById('si-os').textContent     = `Windows ${si.release}`;
+
+  // OS row
+  document.getElementById('si-os').textContent     = si.osName || `Windows ${si.release}`;
   document.getElementById('si-arch').textContent   = si.arch;
-  document.getElementById('si-cpu').textContent    = `${si.cpus} cores`;
+  // CPU: name + cores
+  document.getElementById('si-cpu').textContent    = si.cpuName
+    ? `${si.cpuName}${si.cpuCores ? ` (${si.cpuCores}C/${si.cpus}T)` : ` (${si.cpus} threads)`}`
+    : `${si.cpus} threads`;
   document.getElementById('si-host').textContent   = si.hostname;
   document.getElementById('si-uptime').textContent = `${si.uptime}h`;
   document.getElementById('si-tmp').textContent    = si.tmpDir;
+
+  // Inject GPU row dynamically if exists
+  const gpuCard = document.getElementById('si-gpu');
+  if (gpuCard) {
+    gpuCard.textContent = si.gpuName + (si.vram ? ` — ${si.vram}` : '');
+  }
+  const tempCard = document.getElementById('si-cputemp');
+  if (tempCard) {
+    tempCard.textContent = si.cpuTemp !== 'N/A' ? `${si.cpuTemp}°C` : 'N/A (WMI unavailable)';
+  }
 
   // Memory
   document.getElementById('mem-used').textContent  = si.usedMem;
@@ -329,4 +344,146 @@ window.addEventListener('DOMContentLoaded', () => {
 
   loadDashboard();
   loadSizes();
+});
+
+// ═══════════════════════════════════════════════════════════════════
+//  FEATURE LOG HELPER (Boost / Gaming / BG Apps)
+// ═══════════════════════════════════════════════════════════════════
+function setupFeatureLog(logBoxId) {
+  const box = document.getElementById(logBoxId);
+  box.innerHTML = '';
+  box.classList.remove('hidden');
+  window.api.removeFeatureLog();
+  window.api.onFeatureLog(data => {
+    if (!data || !data.data) return;
+    const line = document.createElement('div');
+    const txt = data.data;
+    if (data.type === 'done')        line.className = 'log-line-done';
+    else if (data.type === 'stderr') line.className = 'log-line-stderr';
+    else if (txt.includes('[OK]'))   { line.className = 'log-line-done'; }
+    else if (txt.includes('[WARN]')) { line.className = 'log-line-info'; }
+    else                             line.className = 'log-line-stdout';
+    line.textContent = data.type === 'done' ? `✓ Done (exit ${data.code})` : txt;
+    box.appendChild(line);
+    box.scrollTop = box.scrollHeight;
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════
+//  PERFORMANCE BOOST
+// ═══════════════════════════════════════════════════════════════════
+document.querySelectorAll('[data-boost]').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const type = btn.dataset.boost;
+    setupFeatureLog('boost-log');
+    const label = btn.textContent.trim();
+    document.getElementById('boost-log').innerHTML = `<div class="log-line-info">▶ ${label}</div>`;
+    toast(`Running: ${label}...`, 'warn');
+    btn.disabled = true;
+    await window.api.runBoost(type);
+    btn.disabled = false;
+    window.api.removeFeatureLog();
+    toast('Done!', 'success');
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════
+//  GAMING MODE
+// ═══════════════════════════════════════════════════════════════════
+document.querySelectorAll('[data-gm]').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const type = btn.dataset.gm;
+    setupFeatureLog('gaming-log');
+    const label = btn.textContent.trim();
+    document.getElementById('gaming-log').innerHTML = `<div class="log-line-info">▶ ${label}</div>`;
+    toast(`Running: ${label}...`, 'warn');
+    btn.disabled = true;
+    await window.api.runGaming(type);
+    btn.disabled = false;
+    window.api.removeFeatureLog();
+    toast('Done!', 'success');
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════
+//  BACKGROUND APPS
+// ═══════════════════════════════════════════════════════════════════
+document.querySelectorAll('[data-bg]').forEach(btn => {
+  btn.addEventListener('click', async () => {
+    const type = btn.dataset.bg;
+    setupFeatureLog('bgapps-log');
+    const label = btn.textContent.trim();
+    document.getElementById('bgapps-log').innerHTML = `<div class="log-line-info">▶ ${label}</div>`;
+    toast(`Running: ${label}...`, 'warn');
+    btn.disabled = true;
+    await window.api.runBgApp(type);
+    btn.disabled = false;
+    window.api.removeFeatureLog();
+    toast('Done!', 'success');
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════════
+//  EXCLUDE PATH MANAGER
+// ═══════════════════════════════════════════════════════════════════
+let excludeList = [];
+
+async function loadExcludes() {
+  excludeList = await window.api.getExcludes();
+  renderExcludes();
+}
+
+function renderExcludes() {
+  const container = document.getElementById('excl-list');
+  document.getElementById('excl-count').textContent = excludeList.length;
+  if (!excludeList.length) {
+    container.innerHTML = '<div class="loading-msg" style="padding:12px 14px;font-size:13px;color:var(--text-muted);">Belum ada path yang dikecualikan.</div>';
+    return;
+  }
+  container.innerHTML = excludeList.map((p, i) => `
+    <div class="exclude-item">
+      <span class="exclude-path" title="${escHtml(p)}">${escHtml(p)}</span>
+      <span class="exclude-del" data-idx="${i}" title="Remove">✕</span>
+    </div>`).join('');
+  container.querySelectorAll('.exclude-del').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      excludeList.splice(parseInt(btn.dataset.idx), 1);
+      await window.api.saveExcludes(excludeList);
+      renderExcludes();
+      toast('Path removed.', 'success');
+    });
+  });
+}
+
+document.getElementById('btn-excl-add').addEventListener('click', async () => {
+  const input = document.getElementById('excl-input');
+  const val = input.value.trim().replace(/\\+$/, '');
+  if (!val) { toast('Enter a path first.', 'warn'); return; }
+  if (excludeList.includes(val)) { toast('Path already in list.', 'warn'); return; }
+  excludeList.push(val);
+  await window.api.saveExcludes(excludeList);
+  input.value = '';
+  renderExcludes();
+  toast('Path added!', 'success');
+});
+
+document.getElementById('excl-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('btn-excl-add').click();
+});
+
+document.getElementById('btn-excl-clear').addEventListener('click', async () => {
+  if (!excludeList.length) return;
+  if (!confirm('Clear all excluded paths?')) return;
+  excludeList = [];
+  await window.api.saveExcludes([]);
+  renderExcludes();
+  toast('All excludes cleared.', 'success');
+});
+
+// ── Navigation: load excludes when switching to excludes page ────────────────
+// Patch navBtns to also load excludes
+navBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (btn.dataset.page === 'excludes') loadExcludes();
+  });
 });

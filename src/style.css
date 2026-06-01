@@ -313,3 +313,91 @@ html, body { height: 100%; font-family: 'NotoSans Bold', 'Segoe UI', sans-serif;
 }
 .loading-state img  { width: 48px; }
 .loading-state span { font-size: 14px; color: var(--text-muted); font-family: 'NotoSans Bold', sans-serif; }
+
+/* ─── Toggle Switch ────────────────────────────────────────────────── */
+.toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 10px 14px; border-bottom: 1px solid var(--bg-light);
+}
+.toggle-row:last-child { border-bottom: none; }
+.toggle-label { font-size: 14px; font-weight: bold; }
+.toggle-desc  { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+.toggle-switch {
+  position: relative; width: 48px; height: 24px; cursor: pointer; flex-shrink: 0;
+}
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-track {
+  position: absolute; inset: 0;
+  background: #8C8D90; border: 2px solid var(--bg-darker);
+  transition: background .2s;
+}
+.toggle-track::before {
+  content: ''; position: absolute;
+  width: 16px; height: 16px; left: 2px; top: 2px;
+  background: #fff; transition: transform .2s;
+}
+.toggle-switch input:checked + .toggle-track { background: var(--green); border-color: var(--green-dark); }
+.toggle-switch input:checked + .toggle-track::before { transform: translateX(24px); }
+
+/* ─── Exclude List ─────────────────────────────────────────────────── */
+.exclude-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px; border-bottom: 1px solid var(--bg-light);
+  font-size: 12px; font-family: 'Consolas', monospace;
+}
+.exclude-item:last-child { border-bottom: none; }
+.exclude-path { flex: 1; color: var(--yellow); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.exclude-del { cursor: pointer; color: var(--red); font-size: 16px; flex-shrink: 0; padding: 0 4px; line-height: 1; }
+.exclude-del:hover { color: #F46D6D; }
+.exclude-input-row { display: flex; gap: 8px; padding: 10px 14px; border-top: 2px solid var(--bg-light); }
+.ore-input {
+  flex: 1; background: var(--bg-darker); border: 2px solid var(--bg-light);
+  color: var(--text); padding: 6px 10px; font-size: 12px;
+  font-family: 'Consolas', monospace; outline: none;
+}
+.ore-input:focus { border-color: var(--green); }
+
+/* ─── Boost / Gaming sub-buttons ──────────────────────────────────── */
+.action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 14px; }
+.action-grid.col3 { grid-template-columns: 1fr 1fr 1fr; }
+.action-btn {
+  display: flex; align-items: center; gap: 6px;
+  height: 38px; padding: 0 12px; cursor: pointer;
+  background: var(--bg-light); border: 2px solid var(--bg-darker);
+  border-top-color: var(--border-top);
+  color: var(--text); font-size: 12px; font-weight: bold;
+  font-family: 'NotoSans Bold', sans-serif;
+  transition: background .1s;
+}
+.action-btn:hover { background: #67686A; }
+.action-btn:active { transform: translateY(1px); }
+.action-btn.green { background: var(--green); border-bottom-color: var(--green-dark); color: #fff; }
+.action-btn.green:hover { background: #2A641C; }
+.action-btn.red   { background: var(--red);   border-bottom-color: var(--red-dark);   color: #fff; }
+.action-btn.red:hover { background: #A02020; }
+.action-btn.blue  { background: #2A5A8A; border-bottom-color: #1A3A5C; color: #fff; }
+.action-btn.blue:hover { background: #1A4A7A; }
+.action-btn.orange{ background: #7A4A10; border-bottom-color: #4A2A08; color: #fff; }
+.action-btn.orange:hover { background: #5A3A08; }
+.action-btn.full  { grid-column: 1 / -1; }
+
+/* ─── System info detailed ─────────────────────────────────────────── */
+.sysinfo-detail { padding: 4px 0; }
+.sysinfo-row {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 8px 14px; border-bottom: 1px solid var(--bg-light);
+  font-size: 13px;
+}
+.sysinfo-row:last-child { border-bottom: none; }
+.sysinfo-key { width: 130px; color: var(--text-muted); flex-shrink: 0; font-size: 12px; }
+.sysinfo-val { flex: 1; color: var(--text); word-break: break-word; }
+.sysinfo-val.ok   { color: var(--green-hi); }
+.sysinfo-val.warn { color: var(--yellow); }
+.sysinfo-val.bad  { color: #F46D6D; }
+
+/* ─── Log box compact ──────────────────────────────────────────────── */
+.log-box-inline {
+  margin: 0 14px 14px; background: var(--bg-darker); border: 2px solid var(--bg-light);
+  padding: 8px 10px; font-size: 11px; font-family: 'Consolas', monospace;
+  max-height: 160px; overflow-y: auto; color: var(--text-dim);
+}

@@ -26,6 +26,23 @@ contextBridge.exposeInMainWorld('api', {
   getStartupItems:   ()      => ipcRenderer.invoke('get-startup-items'),
   toggleStartupItem: (item)  => ipcRenderer.invoke('toggle-startup-item', item),
 
+  // Performance Boost
+  runBoost: (type) => ipcRenderer.invoke('run-boost', type),
+
+  // Gaming Mode
+  runGaming: (type) => ipcRenderer.invoke('run-gaming', type),
+
+  // Background Apps
+  runBgApp: (type) => ipcRenderer.invoke('run-bgapp', type),
+
+  // Excludes
+  getExcludes:  ()     => ipcRenderer.invoke('get-excludes'),
+  saveExcludes: (list) => ipcRenderer.invoke('save-excludes', list),
+
+  // Feature log (boost, gaming, bgapps)
+  onFeatureLog:    (cb) => ipcRenderer.on('feature-log', (e, data) => cb(data)),
+  removeFeatureLog: ()  => ipcRenderer.removeAllListeners('feature-log'),
+
   // Shell
   openExternal: (url) => ipcRenderer.send('open-external', url),
   openPath:     (p)   => ipcRenderer.send('open-path', p),

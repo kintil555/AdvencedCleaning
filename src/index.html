@@ -36,6 +36,18 @@
     <button class="nav-btn" data-page="tools">
       <span class="nav-icon">🔧</span> Tools
     </button>
+    <button class="nav-btn" data-page="boost">
+      <span class="nav-icon">⚡</span> Performance
+    </button>
+    <button class="nav-btn" data-page="gaming">
+      <span class="nav-icon">🎮</span> Gaming Mode
+    </button>
+    <button class="nav-btn" data-page="bgapps">
+      <span class="nav-icon">📱</span> BG Apps
+    </button>
+    <button class="nav-btn" data-page="excludes">
+      <span class="nav-icon">🔒</span> Excludes
+    </button>
     <button class="nav-btn" data-page="about">
       <span class="nav-icon">ℹ</span> About
     </button>
@@ -56,7 +68,9 @@
         <div id="sysinfo-grid" class="info-grid">
           <div class="info-card"><div class="info-label">OS</div><div class="info-value" id="si-os">Loading...</div></div>
           <div class="info-card"><div class="info-label">Architecture</div><div class="info-value" id="si-arch">—</div></div>
-          <div class="info-card"><div class="info-label">CPU Cores</div><div class="info-value" id="si-cpu">—</div></div>
+          <div class="info-card"><div class="info-label">CPU</div><div class="info-value small" id="si-cpu">—</div></div>
+          <div class="info-card"><div class="info-label">GPU</div><div class="info-value small" id="si-gpu">—</div></div>
+          <div class="info-card"><div class="info-label">CPU Temp</div><div class="info-value" id="si-cputemp">—</div></div>
           <div class="info-card"><div class="info-label">Hostname</div><div class="info-value" id="si-host">—</div></div>
           <div class="info-card"><div class="info-label">Uptime</div><div class="info-value" id="si-uptime">—</div></div>
           <div class="info-card"><div class="info-label">Temp Dir</div><div class="info-value small" id="si-tmp">—</div></div>
@@ -357,6 +371,139 @@
           <strong>OreUI</strong> by Spectrollay — Minecraft Bedrock-inspired web UI framework.<br/>
           <a href="#" id="link-oreui">github.com/Spectrollay-OreUI/OreUI</a>
         </div>
+      </div>
+    </section>
+
+    <!-- === PERFORMANCE BOOST === -->
+    <section id="page-boost" class="page">
+      <div class="page-header">
+        <div class="page-header-title">⚡ Performance Boost</div>
+        <div class="page-header-sub">Registry tweaks untuk performa Windows lebih baik</div>
+      </div>
+      <div class="main-block">
+        <div class="block-header">Visual &amp; Power</div>
+        <div class="action-grid">
+          <button class="action-btn green" data-boost="visualfx">👁 Visual FX → Best Perf</button>
+          <button class="action-btn green" data-boost="powerplan">🔌 High Performance Plan</button>
+        </div>
+      </div>
+      <div class="main-block">
+        <div class="block-header">Memory &amp; Network</div>
+        <div class="action-grid">
+          <button class="action-btn blue" data-boost="memory">🧠 Memory Management</button>
+          <button class="action-btn blue" data-boost="netthrottle">🌐 Network Throttling OFF</button>
+          <button class="action-btn blue" data-boost="gamemode">🎯 CPU/GPU Priority Max</button>
+          <button class="action-btn blue" data-boost="nagle">📡 Nagle Algorithm OFF</button>
+        </div>
+      </div>
+      <div class="main-block">
+        <div class="block-header">All in One</div>
+        <div class="action-grid">
+          <button class="action-btn green full" data-boost="all">✅ Apply ALL Tweaks (1–6)</button>
+          <button class="action-btn red full" data-boost="undo">↩ Restore All to Windows Default</button>
+        </div>
+      </div>
+      <div id="boost-log" class="log-box-inline hidden"></div>
+    </section>
+
+    <!-- === GAMING MODE === -->
+    <section id="page-gaming" class="page">
+      <div class="page-header">
+        <div class="page-header-title">🎮 Gaming Mode</div>
+        <div class="page-header-sub">Optimasi maksimal untuk gaming — jalankan sebelum main, undo setelah selesai</div>
+      </div>
+      <div class="main-block">
+        <div class="block-header">Process &amp; Power</div>
+        <div class="action-grid">
+          <button class="action-btn green" data-gm="killbg">💀 Kill BG Processes</button>
+          <button class="action-btn green" data-gm="powerplan">🔌 Ultimate Performance</button>
+        </div>
+      </div>
+      <div class="main-block">
+        <div class="block-header">CPU / GPU / Network</div>
+        <div class="action-grid">
+          <button class="action-btn blue" data-gm="priority">🎯 CPU+GPU Priority Max</button>
+          <button class="action-btn blue" data-gm="gamemode">🎮 Windows Game Mode</button>
+          <button class="action-btn blue" data-gm="hags">⚡ HAGS (GPU Scheduling)</button>
+          <button class="action-btn blue" data-gm="netthrottle">🌐 Network Throttling OFF</button>
+          <button class="action-btn blue" data-gm="nagle">📡 Nagle Algorithm OFF</button>
+          <button class="action-btn orange" data-gm="services">⚙ Stop Heavy Services</button>
+          <button class="action-btn orange" data-gm="uwpbg">📱 UWP Background OFF</button>
+          <button class="action-btn orange" data-gm="ramflush">🧠 Flush RAM Standby</button>
+          <button class="action-btn orange" data-gm="timer">⏱ Timer Resolution 0.5ms</button>
+        </div>
+      </div>
+      <div class="main-block">
+        <div class="block-header">All in One</div>
+        <div class="action-grid">
+          <button class="action-btn green full" data-gm="all">✅ Apply ALL Gaming Tweaks (1–11)</button>
+          <button class="action-btn red full" data-gm="undo">↩ UNDO Gaming Mode — Restore Default</button>
+        </div>
+      </div>
+      <div id="gaming-log" class="log-box-inline hidden"></div>
+    </section>
+
+    <!-- === BACKGROUND APPS === -->
+    <section id="page-bgapps" class="page">
+      <div class="page-header">
+        <div class="page-header-title">📱 Background Apps &amp; Services</div>
+        <div class="page-header-sub">Kill, disable, dan manage background bloat</div>
+      </div>
+      <div class="main-block">
+        <div class="block-header">Kill Processes (Sementara)</div>
+        <div class="action-grid">
+          <button class="action-btn red full" data-bg="kill">💀 Kill All Bloat Processes (esrv, PCManager, SnipTool, dll)</button>
+        </div>
+      </div>
+      <div class="main-block">
+        <div class="block-header">Disable UWP &amp; App Background</div>
+        <div class="action-grid">
+          <button class="action-btn orange" data-bg="uwp">📱 UWP Background Apps</button>
+          <button class="action-btn orange" data-bg="snip">✂ Snipping Tool BG</button>
+          <button class="action-btn orange" data-bg="phonelink">📞 Phone Link BG</button>
+          <button class="action-btn orange" data-bg="widgets">🗞 Widgets (Win11)</button>
+          <button class="action-btn orange" data-bg="search">🔍 Search Highlights</button>
+        </div>
+      </div>
+      <div class="main-block">
+        <div class="block-header">Disable Services Pihak Ketiga</div>
+        <div class="action-grid">
+          <button class="action-btn blue" data-bg="esrv">🔷 Intel esrv / SUR</button>
+          <button class="action-btn blue" data-bg="pcmanager">🖥 PC Manager</button>
+          <button class="action-btn blue" data-bg="edgeupdate">🌐 Edge Update Services</button>
+          <button class="action-btn blue" data-bg="nvidiatelem">🎮 NVIDIA Telemetry</button>
+          <button class="action-btn blue" data-bg="adobe">🎨 Adobe / Bonjour / CCX</button>
+          <button class="action-btn blue" data-bg="winservices">🪟 Windows Services (DiagTrack, Xbox, Fax, dll)</button>
+        </div>
+      </div>
+      <div class="main-block">
+        <div class="block-header">All in One</div>
+        <div class="action-grid">
+          <button class="action-btn green full" data-bg="all">✅ Disable SEMUA Background Bloat</button>
+          <button class="action-btn red full" data-bg="undo">↩ UNDO — Restore ke Default Windows</button>
+        </div>
+      </div>
+      <div id="bgapps-log" class="log-box-inline hidden"></div>
+    </section>
+
+    <!-- === EXCLUDES === -->
+    <section id="page-excludes" class="page">
+      <div class="page-header">
+        <div class="page-header-title">🔒 Exclude Path Manager</div>
+        <div class="page-header-sub">Folder yang terdaftar akan dilewati saat semua operasi cleanup</div>
+      </div>
+      <div class="main-block">
+        <div class="block-header">Path Terlindungi (<span id="excl-count">0</span>)</div>
+        <div id="excl-list"></div>
+        <div class="exclude-input-row">
+          <input class="ore-input" id="excl-input" placeholder="C:\Path\Yang\Ingin\Dilindungi" />
+          <button class="ore-btn green-btn small-btn" id="btn-excl-add">+ Tambah</button>
+          <button class="ore-btn normal-btn small-btn" id="btn-excl-clear">🗑 Clear All</button>
+        </div>
+      </div>
+      <div class="info-banner">
+        ⚠ Gunakan <strong>full path</strong>. Contoh: <code>C:\Users\Nama\Documents\Project</code><br/>
+        Exclude disimpan di <code>%LOCALAPPDATA%\AdvancedCleanup_excludes.txt</code>
       </div>
     </section>
 
