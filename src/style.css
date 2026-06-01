@@ -148,48 +148,78 @@ html, body { height: 100%; font-family: 'NotoSans Bold', 'Segoe UI', sans-serif;
 .disk-bar.danger { background: var(--red); }
 .disk-label { font-size: 12px; color: var(--text-muted); width: 130px; text-align: right; }
 
-/* ─── Buttons ──────────────────────────────────────────────────────── */
-.btn-row { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 16px; }
-.ore-btn {
-  cursor: pointer; font-family: 'NotoSans Bold', 'Segoe UI', sans-serif; font-weight: bold;
-  height: 40px; padding: 0 16px; border: 2px solid var(--bg-darker);
-  display: flex; align-items: center; gap: 6px;
-  transition: background .1s, box-shadow .1s;
-}
-.ore-btn:active:not(:disabled) { transform: translateY(2px); }
-.normal-btn {
-  background: var(--btn-bg); color: #000;
-  box-shadow: inset 0 -4px var(--btn-shadow), inset 3px 3px rgba(255,255,255,.6), inset -3px -7px rgba(255,255,255,.4);
-}
-.normal-btn:hover { background: #B1B2B5; box-shadow: inset 0 -4px var(--btn-shadow), inset 3px 3px rgba(255,255,255,.8), inset -3px -7px rgba(255,255,255,.6); }
-.normal-btn:active { box-shadow: inset 3px 3px rgba(255,255,255,.8), inset -3px -3px rgba(255,255,255,.6); }
-.green-btn {
-  background: var(--green); color: #fff;
-  box-shadow: inset 0 -4px var(--green-dark), inset 3px 3px rgba(255,255,255,.2), inset -3px -7px rgba(255,255,255,.1);
-}
-.green-btn:hover { background: #2A641C; box-shadow: inset 0 -4px var(--green-dark), inset 3px 3px rgba(255,255,255,.4), inset -3px -7px rgba(255,255,255,.3); }
-.green-btn:active { background: var(--green-dark); box-shadow: inset 3px 3px rgba(255,255,255,.4), inset -3px -3px rgba(255,255,255,.3); }
-.red-btn {
-  background: var(--red); color: #fff;
-  box-shadow: inset 0 -4px var(--red-dark), inset 3px 3px rgba(255,255,255,.2), inset -3px -7px rgba(255,255,255,.1);
-}
-.red-btn:hover { background: #C02D2D; }
-.red-btn:active { background: var(--red-dark); }
-.ore-btn:disabled { background: var(--btn-bg); border-color: #8C8D90; box-shadow: inset 0 -4px #B1B2B5; color: var(--bg); cursor: not-allowed; opacity: .7; }
-.small-btn { padding: 0 10px; height: 32px; font-size: 12px; }
+/* ─── Buttons (OreUI .btn system) ──────────────────────────────────── */
+.btn-row { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 16px; align-items: center; }
 
-/* ─── OreUI Checkbox ───────────────────────────────────────────────── */
-.ore-checkbox {
-  width: 22px; height: 22px; flex-shrink: 0;
-  background: #8C8D90; border: 2px solid var(--bg-darker);
+/* OreUI .btn base — override justify-self so it works in flex rows */
+.btn {
+  cursor: pointer;
+  font-family: 'NotoSans Bold', 'Segoe UI', sans-serif;
+  font-weight: bold;
+  height: 40px;
+  justify-self: unset;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 14px;
+  border: 2px solid #1E1E1F;
+}
+.btn:active:not(.disabled_btn) {
+  height: 36px;
+  margin-top: 4px;
+  padding-bottom: 2px;
+}
+.normal_btn {
+  background-color: #D0D1D4;
+  box-shadow: inset 0 -4px #58585A, inset 3px 3px rgba(255,255,255,.6), inset -3px -7px rgba(255,255,255,.4);
+  color: #000;
+  padding-bottom: 6px;
+}
+.normal_btn:hover { background-color: #B1B2B5; box-shadow: inset 0 -4px #58585A, inset 3px 3px rgba(255,255,255,.8), inset -3px -7px rgba(255,255,255,.6); }
+.normal_btn:active { background-color: #B1B2B5; box-shadow: inset 3px 3px rgba(255,255,255,.8), inset -3px -3px rgba(255,255,255,.6); }
+.green_btn {
+  background-color: #3C8527;
+  box-shadow: inset 0 -4px #1D4D13, inset 3px 3px rgba(255,255,255,.2), inset -3px -7px rgba(255,255,255,.1);
+  color: #fff;
+  padding-bottom: 6px;
+}
+.green_btn:hover { background-color: #2A641C; box-shadow: inset 0 -4px #1D4D13, inset 3px 3px rgba(255,255,255,.4), inset -3px -7px rgba(255,255,255,.3); }
+.green_btn:active { background-color: #1D4D13; box-shadow: inset 3px 3px rgba(255,255,255,.4), inset -3px -3px rgba(255,255,255,.3); }
+.red_btn {
+  background-color: #C33636;
+  box-shadow: inset 0 -4px #AD1D1D, inset 3px 3px rgba(255,255,255,.2), inset -3px -7px rgba(255,255,255,.1);
+  color: #fff;
+  padding-bottom: 6px;
+}
+.red_btn:hover { background-color: #C02D2D; box-shadow: inset 0 -4px #AD1D1D, inset 3px 3px rgba(255,255,255,.5), inset -3px -7px rgba(255,255,255,.4); }
+.red_btn:active { background-color: #AD1D1D; box-shadow: inset 3px 3px rgba(255,255,255,.5), inset -3px -3px rgba(255,255,255,.4); }
+.disabled_btn, .btn:disabled {
+  background-color: #D0D1D4; border-color: #8C8D90;
+  box-shadow: inset 0 -4px #B1B2B5; color: #48494A;
+  cursor: not-allowed; padding-bottom: 6px; opacity: .7;
+}
+/* OreUI size variants */
+.extra_small_btn { width: 100px; }
+.small_btn  { width: 130px; }
+.middle_btn { width: 200px; }
+.large_btn  { width: 272px; }
+
+/* ─── OreUI Checkbox (custom-checkbox) ────────────────────────────── */
+.custom-checkbox {
+  width: 20px; height: 20px; flex-shrink: 0;
+  background-color: #8C8D90; border: 2px solid #1E1E1F;
   box-shadow: inset 2px 2px rgba(255,255,255,.2), inset -2px -2px rgba(255,255,255,.1);
   cursor: pointer; position: relative; display: flex; align-items: center; justify-content: center;
   transition: background .1s;
 }
-.ore-checkbox:hover { background: #B1B2B5; }
-.ore-checkbox.on { background: var(--green); }
-.ore-checkbox.on:hover { background: #2A641C; }
-.ore-checkbox.on::after { content: '✓'; color: #fff; font-size: 14px; font-weight: bold; }
+.custom-checkbox:hover { background-color: #B1B2B5; }
+.custom-checkbox:active { background-color: #58585A; }
+.custom-checkbox.on { background-color: #3C8527; }
+.custom-checkbox.on:hover { background-color: #2A641C; }
+.custom-checkbox.on:active { background-color: #1D4D13; }
+.custom-checkbox.on::after { content: '✓'; color: #fff; font-size: 14px; font-weight: bold; }
 
 /* ─── Clean List ───────────────────────────────────────────────────── */
 .clean-list { padding: 4px 0; }
@@ -350,36 +380,36 @@ html, body { height: 100%; font-family: 'NotoSans Bold', 'Segoe UI', sans-serif;
 .exclude-del { cursor: pointer; color: var(--red); font-size: 16px; flex-shrink: 0; padding: 0 4px; line-height: 1; }
 .exclude-del:hover { color: #F46D6D; }
 .exclude-input-row { display: flex; gap: 8px; padding: 10px 14px; border-top: 2px solid var(--bg-light); }
-.ore-input {
-  flex: 1; background: var(--bg-darker); border: 2px solid var(--bg-light);
-  color: var(--text); padding: 6px 10px; font-size: 12px;
-  font-family: 'Consolas', monospace; outline: none;
-}
-.ore-input:focus { border-color: var(--green); }
+.exclude-input-row { display: flex; gap: 8px; padding: 10px 14px; border-top: 2px solid var(--bg-light); align-items: center; }
 
-/* ─── Boost / Gaming sub-buttons ──────────────────────────────────── */
+/* OreUI .input (text field) — scoped to avoid global conflicts */
+#excl-input.input {
+  flex: 1;
+  font-family: 'Consolas', monospace;
+  font-size: 12px;
+  min-height: 36px;
+  height: 36px;
+  padding: 6px 10px;
+}
+
+/* ─── Action Grid (Boost / Gaming / BG Apps) ───────────────────────── */
 .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 14px; }
 .action-grid.col3 { grid-template-columns: 1fr 1fr 1fr; }
-.action-btn {
-  display: flex; align-items: center; gap: 6px;
-  height: 38px; padding: 0 12px; cursor: pointer;
-  background: var(--bg-light); border: 2px solid var(--bg-darker);
-  border-top-color: var(--border-top);
-  color: var(--text); font-size: 12px; font-weight: bold;
-  font-family: 'NotoSans Bold', sans-serif;
-  transition: background .1s;
+
+/* action-ore-btn: OreUI .btn inside action-grid — fills grid cell, no fixed width */
+.btn.action-ore-btn {
+  width: 100%;
+  height: 38px;
+  margin: 0;
+  font-size: 12px;
+  padding: 0 10px;
+  justify-content: flex-start;
 }
-.action-btn:hover { background: #67686A; }
-.action-btn:active { transform: translateY(1px); }
-.action-btn.green { background: var(--green); border-bottom-color: var(--green-dark); color: #fff; }
-.action-btn.green:hover { background: #2A641C; }
-.action-btn.red   { background: var(--red);   border-bottom-color: var(--red-dark);   color: #fff; }
-.action-btn.red:hover { background: #A02020; }
-.action-btn.blue  { background: #2A5A8A; border-bottom-color: #1A3A5C; color: #fff; }
-.action-btn.blue:hover { background: #1A4A7A; }
-.action-btn.orange{ background: #7A4A10; border-bottom-color: #4A2A08; color: #fff; }
-.action-btn.orange:hover { background: #5A3A08; }
-.action-btn.full  { grid-column: 1 / -1; }
+.btn.action-ore-btn:active:not(.disabled_btn) {
+  height: 34px;
+  margin-top: 4px;
+}
+.btn.action-ore-btn.full { grid-column: 1 / -1; }
 
 /* ─── System info detailed ─────────────────────────────────────────── */
 .sysinfo-detail { padding: 4px 0; }

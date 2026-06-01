@@ -96,9 +96,9 @@
       <div class="main-block">
         <div class="block-header">Quick Actions</div>
         <div class="btn-row">
-          <button class="ore-btn green-btn" id="qa-clean-all">🧹 Quick Clean</button>
-          <button class="ore-btn normal-btn" id="qa-flush-dns">🌐 Flush DNS</button>
-          <button class="ore-btn normal-btn" id="qa-refresh">🔄 Refresh Info</button>
+          <button class="btn green_btn middle_btn" id="qa-clean-all">🧹 Quick Clean</button>
+          <button class="btn normal_btn middle_btn" id="qa-flush-dns">🌐 Flush DNS</button>
+          <button class="btn normal_btn middle_btn" id="qa-refresh">🔄 Refresh Info</button>
         </div>
       </div>
 
@@ -119,7 +119,7 @@
 
           <div class="clean-item" data-task="tempFiles">
             <div class="clean-item-left">
-              <div class="ore-checkbox on" data-task="tempFiles"></div>
+              <div class="custom-checkbox on" data-task="tempFiles"></div>
               <div class="clean-item-info">
                 <div class="clean-item-name">Temp Files</div>
                 <div class="clean-item-desc">Windows & user temporary files</div>
@@ -130,7 +130,7 @@
 
           <div class="clean-item" data-task="browserCache">
             <div class="clean-item-left">
-              <div class="ore-checkbox on" data-task="browserCache"></div>
+              <div class="custom-checkbox on" data-task="browserCache"></div>
               <div class="clean-item-info">
                 <div class="clean-item-name">Browser Cache</div>
                 <div class="clean-item-desc">Chrome, Edge, Firefox caches</div>
@@ -141,7 +141,7 @@
 
           <div class="clean-item" data-task="recyclebin">
             <div class="clean-item-left">
-              <div class="ore-checkbox on" data-task="recyclebin"></div>
+              <div class="custom-checkbox on" data-task="recyclebin"></div>
               <div class="clean-item-info">
                 <div class="clean-item-name">Recycle Bin</div>
                 <div class="clean-item-desc">Empty all deleted files</div>
@@ -152,7 +152,7 @@
 
           <div class="clean-item" data-task="prefetch">
             <div class="clean-item-left">
-              <div class="ore-checkbox" data-task="prefetch"></div>
+              <div class="custom-checkbox" data-task="prefetch"></div>
               <div class="clean-item-info">
                 <div class="clean-item-name">Prefetch</div>
                 <div class="clean-item-desc">Windows prefetch files</div>
@@ -163,7 +163,7 @@
 
           <div class="clean-item" data-task="windowsLogs">
             <div class="clean-item-left">
-              <div class="ore-checkbox" data-task="windowsLogs"></div>
+              <div class="custom-checkbox" data-task="windowsLogs"></div>
               <div class="clean-item-info">
                 <div class="clean-item-name">Windows Logs</div>
                 <div class="clean-item-desc">Event logs & system logs</div>
@@ -174,7 +174,7 @@
 
           <div class="clean-item" data-task="thumbnailCache">
             <div class="clean-item-left">
-              <div class="ore-checkbox" data-task="thumbnailCache"></div>
+              <div class="custom-checkbox" data-task="thumbnailCache"></div>
               <div class="clean-item-info">
                 <div class="clean-item-name">Thumbnail Cache</div>
                 <div class="clean-item-desc">Explorer thumbnail databases</div>
@@ -185,7 +185,7 @@
 
           <div class="clean-item" data-task="windowsUpdate">
             <div class="clean-item-left">
-              <div class="ore-checkbox" data-task="windowsUpdate"></div>
+              <div class="custom-checkbox" data-task="windowsUpdate"></div>
               <div class="clean-item-info">
                 <div class="clean-item-name">Windows Update Cache</div>
                 <div class="clean-item-desc">Downloaded update files</div>
@@ -196,7 +196,7 @@
 
           <div class="clean-item" data-task="memoryDumps">
             <div class="clean-item-left">
-              <div class="ore-checkbox" data-task="memoryDumps"></div>
+              <div class="custom-checkbox" data-task="memoryDumps"></div>
               <div class="clean-item-info">
                 <div class="clean-item-name">Memory Dumps</div>
                 <div class="clean-item-desc">Crash dump files</div>
@@ -214,7 +214,7 @@
 
           <div class="clean-item" data-task="dns">
             <div class="clean-item-left">
-              <div class="ore-checkbox on" data-task="dns"></div>
+              <div class="custom-checkbox on" data-task="dns"></div>
               <div class="clean-item-info">
                 <div class="clean-item-name">Flush DNS Cache</div>
                 <div class="clean-item-desc">Clear DNS resolver cache</div>
@@ -225,7 +225,7 @@
 
           <div class="clean-item" data-task="ramOptimize">
             <div class="clean-item-left">
-              <div class="ore-checkbox" data-task="ramOptimize"></div>
+              <div class="custom-checkbox" data-task="ramOptimize"></div>
               <div class="clean-item-info">
                 <div class="clean-item-name">Optimize RAM</div>
                 <div class="clean-item-desc">Empty working sets of all processes</div>
@@ -238,9 +238,9 @@
       </div>
 
       <div class="btn-row" style="padding:0 16px 16px;">
-        <button class="ore-btn normal-btn" id="btn-select-all">☑ Select All</button>
-        <button class="ore-btn normal-btn" id="btn-deselect-all">☐ Deselect All</button>
-        <button class="ore-btn green-btn" id="btn-start-clean">🧹 Start Cleaning</button>
+        <button class="btn normal_btn small_btn" id="btn-select-all">☑ Select All</button>
+        <button class="btn normal_btn small_btn" id="btn-deselect-all">☐ Deselect All</button>
+        <button class="btn green_btn middle_btn" id="btn-start-clean">🧹 Start Cleaning</button>
       </div>
 
       <div id="clean-progress" class="hidden">
@@ -263,7 +263,7 @@
       <div class="main-block">
         <div class="block-header">
           Startup Items
-          <button class="ore-btn normal-btn small-btn" id="btn-refresh-startup" style="float:right;margin:0">🔄 Refresh</button>
+          <button class="btn normal_btn extra_small_btn" id="btn-refresh-startup" style="float:right;margin:0">🔄 Refresh</button>
         </div>
         <div id="startup-list">
           <div class="loading-state"><img src="images/Loading.gif" alt="loading"/><span>Loading startup items...</span></div>
@@ -288,42 +288,42 @@
           <div class="tool-card-icon">🛡</div>
           <div class="tool-card-title">SFC Scan</div>
           <div class="tool-card-desc">System File Checker — scans and repairs corrupted system files</div>
-          <button class="ore-btn green-btn" id="btn-sfc">Run SFC</button>
+          <button class="btn green_btn middle_btn" id="btn-sfc">Run SFC</button>
         </div>
 
         <div class="tool-card">
           <div class="tool-card-icon">🔬</div>
           <div class="tool-card-title">DISM Repair</div>
           <div class="tool-card-desc">Restore Windows component store health (requires internet)</div>
-          <button class="ore-btn green-btn" id="btn-dism">Run DISM</button>
+          <button class="btn green_btn middle_btn" id="btn-dism">Run DISM</button>
         </div>
 
         <div class="tool-card">
           <div class="tool-card-icon">💽</div>
           <div class="tool-card-title">Disk Cleanup</div>
           <div class="tool-card-desc">Launch Windows built-in Disk Cleanup utility</div>
-          <button class="ore-btn normal-btn" id="btn-diskcleanup">Open Cleanmgr</button>
+          <button class="btn normal_btn middle_btn" id="btn-diskcleanup">Open Cleanmgr</button>
         </div>
 
         <div class="tool-card">
           <div class="tool-card-icon">🌐</div>
           <div class="tool-card-title">Network Reset</div>
           <div class="tool-card-desc">Flush DNS, reset Winsock and IP stack (restart may be needed)</div>
-          <button class="ore-btn normal-btn" id="btn-netreset">Reset Network</button>
+          <button class="btn normal_btn middle_btn" id="btn-netreset">Reset Network</button>
         </div>
 
         <div class="tool-card">
           <div class="tool-card-icon">⚡</div>
           <div class="tool-card-title">RAM Optimizer</div>
           <div class="tool-card-desc">Free unused memory by emptying process working sets</div>
-          <button class="ore-btn normal-btn" id="btn-ramopt">Optimize RAM</button>
+          <button class="btn normal_btn middle_btn" id="btn-ramopt">Optimize RAM</button>
         </div>
 
         <div class="tool-card">
           <div class="tool-card-icon">📋</div>
           <div class="tool-card-title">Event Viewer</div>
           <div class="tool-card-desc">Open Windows Event Viewer</div>
-          <button class="ore-btn normal-btn" id="btn-eventvwr">Open</button>
+          <button class="btn normal_btn small_btn" id="btn-eventvwr">Open</button>
         </div>
 
       </div>
@@ -347,7 +347,7 @@
           Built with Electron + OreUI design system.
         </div>
         <div class="btn-row" style="justify-content:center;margin-top:24px">
-          <button class="ore-btn normal-btn" id="btn-github">⭐ GitHub</button>
+          <button class="btn normal_btn middle_btn" id="btn-github">⭐ GitHub</button>
         </div>
       </div>
 
@@ -383,24 +383,24 @@
       <div class="main-block">
         <div class="block-header">Visual &amp; Power</div>
         <div class="action-grid">
-          <button class="action-btn green" data-boost="visualfx">👁 Visual FX → Best Perf</button>
-          <button class="action-btn green" data-boost="powerplan">🔌 High Performance Plan</button>
+          <button class="btn green_btn action-ore-btn" data-boost="visualfx">👁 Visual FX → Best Perf</button>
+          <button class="btn green_btn action-ore-btn" data-boost="powerplan">🔌 High Performance Plan</button>
         </div>
       </div>
       <div class="main-block">
         <div class="block-header">Memory &amp; Network</div>
         <div class="action-grid">
-          <button class="action-btn blue" data-boost="memory">🧠 Memory Management</button>
-          <button class="action-btn blue" data-boost="netthrottle">🌐 Network Throttling OFF</button>
-          <button class="action-btn blue" data-boost="gamemode">🎯 CPU/GPU Priority Max</button>
-          <button class="action-btn blue" data-boost="nagle">📡 Nagle Algorithm OFF</button>
+          <button class="btn normal_btn action-ore-btn" data-boost="memory">🧠 Memory Management</button>
+          <button class="btn normal_btn action-ore-btn" data-boost="netthrottle">🌐 Network Throttling OFF</button>
+          <button class="btn normal_btn action-ore-btn" data-boost="gamemode">🎯 CPU/GPU Priority Max</button>
+          <button class="btn normal_btn action-ore-btn" data-boost="nagle">📡 Nagle Algorithm OFF</button>
         </div>
       </div>
       <div class="main-block">
         <div class="block-header">All in One</div>
         <div class="action-grid">
-          <button class="action-btn green full" data-boost="all">✅ Apply ALL Tweaks (1–6)</button>
-          <button class="action-btn red full" data-boost="undo">↩ Restore All to Windows Default</button>
+          <button class="btn green_btn action-ore-btn full" data-boost="all">✅ Apply ALL Tweaks (1–6)</button>
+          <button class="btn red_btn action-ore-btn full" data-boost="undo">↩ Restore All to Windows Default</button>
         </div>
       </div>
       <div id="boost-log" class="log-box-inline hidden"></div>
@@ -415,29 +415,29 @@
       <div class="main-block">
         <div class="block-header">Process &amp; Power</div>
         <div class="action-grid">
-          <button class="action-btn green" data-gm="killbg">💀 Kill BG Processes</button>
-          <button class="action-btn green" data-gm="powerplan">🔌 Ultimate Performance</button>
+          <button class="btn green_btn action-ore-btn" data-gm="killbg">💀 Kill BG Processes</button>
+          <button class="btn green_btn action-ore-btn" data-gm="powerplan">🔌 Ultimate Performance</button>
         </div>
       </div>
       <div class="main-block">
         <div class="block-header">CPU / GPU / Network</div>
         <div class="action-grid">
-          <button class="action-btn blue" data-gm="priority">🎯 CPU+GPU Priority Max</button>
-          <button class="action-btn blue" data-gm="gamemode">🎮 Windows Game Mode</button>
-          <button class="action-btn blue" data-gm="hags">⚡ HAGS (GPU Scheduling)</button>
-          <button class="action-btn blue" data-gm="netthrottle">🌐 Network Throttling OFF</button>
-          <button class="action-btn blue" data-gm="nagle">📡 Nagle Algorithm OFF</button>
-          <button class="action-btn orange" data-gm="services">⚙ Stop Heavy Services</button>
-          <button class="action-btn orange" data-gm="uwpbg">📱 UWP Background OFF</button>
-          <button class="action-btn orange" data-gm="ramflush">🧠 Flush RAM Standby</button>
-          <button class="action-btn orange" data-gm="timer">⏱ Timer Resolution 0.5ms</button>
+          <button class="btn normal_btn action-ore-btn" data-gm="priority">🎯 CPU+GPU Priority Max</button>
+          <button class="btn normal_btn action-ore-btn" data-gm="gamemode">🎮 Windows Game Mode</button>
+          <button class="btn normal_btn action-ore-btn" data-gm="hags">⚡ HAGS (GPU Scheduling)</button>
+          <button class="btn normal_btn action-ore-btn" data-gm="netthrottle">🌐 Network Throttling OFF</button>
+          <button class="btn normal_btn action-ore-btn" data-gm="nagle">📡 Nagle Algorithm OFF</button>
+          <button class="btn normal_btn action-ore-btn" data-gm="services">⚙ Stop Heavy Services</button>
+          <button class="btn normal_btn action-ore-btn" data-gm="uwpbg">📱 UWP Background OFF</button>
+          <button class="btn normal_btn action-ore-btn" data-gm="ramflush">🧠 Flush RAM Standby</button>
+          <button class="btn normal_btn action-ore-btn" data-gm="timer">⏱ Timer Resolution 0.5ms</button>
         </div>
       </div>
       <div class="main-block">
         <div class="block-header">All in One</div>
         <div class="action-grid">
-          <button class="action-btn green full" data-gm="all">✅ Apply ALL Gaming Tweaks (1–11)</button>
-          <button class="action-btn red full" data-gm="undo">↩ UNDO Gaming Mode — Restore Default</button>
+          <button class="btn green_btn action-ore-btn full" data-gm="all">✅ Apply ALL Gaming Tweaks (1–11)</button>
+          <button class="btn red_btn action-ore-btn full" data-gm="undo">↩ UNDO Gaming Mode — Restore Default</button>
         </div>
       </div>
       <div id="gaming-log" class="log-box-inline hidden"></div>
@@ -452,35 +452,35 @@
       <div class="main-block">
         <div class="block-header">Kill Processes (Sementara)</div>
         <div class="action-grid">
-          <button class="action-btn red full" data-bg="kill">💀 Kill All Bloat Processes (esrv, PCManager, SnipTool, dll)</button>
+          <button class="btn red_btn action-ore-btn full" data-bg="kill">💀 Kill All Bloat Processes (esrv, PCManager, SnipTool, dll)</button>
         </div>
       </div>
       <div class="main-block">
         <div class="block-header">Disable UWP &amp; App Background</div>
         <div class="action-grid">
-          <button class="action-btn orange" data-bg="uwp">📱 UWP Background Apps</button>
-          <button class="action-btn orange" data-bg="snip">✂ Snipping Tool BG</button>
-          <button class="action-btn orange" data-bg="phonelink">📞 Phone Link BG</button>
-          <button class="action-btn orange" data-bg="widgets">🗞 Widgets (Win11)</button>
-          <button class="action-btn orange" data-bg="search">🔍 Search Highlights</button>
+          <button class="btn normal_btn action-ore-btn" data-bg="uwp">📱 UWP Background Apps</button>
+          <button class="btn normal_btn action-ore-btn" data-bg="snip">✂ Snipping Tool BG</button>
+          <button class="btn normal_btn action-ore-btn" data-bg="phonelink">📞 Phone Link BG</button>
+          <button class="btn normal_btn action-ore-btn" data-bg="widgets">🗞 Widgets (Win11)</button>
+          <button class="btn normal_btn action-ore-btn" data-bg="search">🔍 Search Highlights</button>
         </div>
       </div>
       <div class="main-block">
         <div class="block-header">Disable Services Pihak Ketiga</div>
         <div class="action-grid">
-          <button class="action-btn blue" data-bg="esrv">🔷 Intel esrv / SUR</button>
-          <button class="action-btn blue" data-bg="pcmanager">🖥 PC Manager</button>
-          <button class="action-btn blue" data-bg="edgeupdate">🌐 Edge Update Services</button>
-          <button class="action-btn blue" data-bg="nvidiatelem">🎮 NVIDIA Telemetry</button>
-          <button class="action-btn blue" data-bg="adobe">🎨 Adobe / Bonjour / CCX</button>
-          <button class="action-btn blue" data-bg="winservices">🪟 Windows Services (DiagTrack, Xbox, Fax, dll)</button>
+          <button class="btn normal_btn action-ore-btn" data-bg="esrv">🔷 Intel esrv / SUR</button>
+          <button class="btn normal_btn action-ore-btn" data-bg="pcmanager">🖥 PC Manager</button>
+          <button class="btn normal_btn action-ore-btn" data-bg="edgeupdate">🌐 Edge Update Services</button>
+          <button class="btn normal_btn action-ore-btn" data-bg="nvidiatelem">🎮 NVIDIA Telemetry</button>
+          <button class="btn normal_btn action-ore-btn" data-bg="adobe">🎨 Adobe / Bonjour / CCX</button>
+          <button class="btn normal_btn action-ore-btn" data-bg="winservices">🪟 Windows Services (DiagTrack, Xbox, Fax, dll)</button>
         </div>
       </div>
       <div class="main-block">
         <div class="block-header">All in One</div>
         <div class="action-grid">
-          <button class="action-btn green full" data-bg="all">✅ Disable SEMUA Background Bloat</button>
-          <button class="action-btn red full" data-bg="undo">↩ UNDO — Restore ke Default Windows</button>
+          <button class="btn green_btn action-ore-btn full" data-bg="all">✅ Disable SEMUA Background Bloat</button>
+          <button class="btn red_btn action-ore-btn full" data-bg="undo">↩ UNDO — Restore ke Default Windows</button>
         </div>
       </div>
       <div id="bgapps-log" class="log-box-inline hidden"></div>
@@ -496,9 +496,9 @@
         <div class="block-header">Path Terlindungi (<span id="excl-count">0</span>)</div>
         <div id="excl-list"></div>
         <div class="exclude-input-row">
-          <input class="ore-input" id="excl-input" placeholder="C:\Path\Yang\Ingin\Dilindungi" />
-          <button class="ore-btn green-btn small-btn" id="btn-excl-add">+ Tambah</button>
-          <button class="ore-btn normal-btn small-btn" id="btn-excl-clear">🗑 Clear All</button>
+          <input class="input" id="excl-input" placeholder="C:\Path\Yang\Ingin\Dilindungi" />
+          <button class="btn green_btn extra_small_btn" id="btn-excl-add">+ Tambah</button>
+          <button class="btn normal_btn extra_small_btn" id="btn-excl-clear">🗑 Clear All</button>
         </div>
       </div>
       <div class="info-banner">

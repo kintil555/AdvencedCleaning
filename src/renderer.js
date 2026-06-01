@@ -1,40 +1,11 @@
-// ── Layout fix: wrap sidebar + content ─────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-  const app     = document.getElementById('app');
-  const titlebar = document.getElementById('titlebar');
-  const sidebar = document.getElementById('sidebar');
-  const content = document.getElementById('content');
-
-  const bodyWrap = document.createElement('div');
-  bodyWrap.id = 'body-wrap';
-  bodyWrap.style.cssText = 'display:flex;flex:1;overflow:hidden;';
-  app.appendChild(bodyWrap);
-  bodyWrap.appendChild(sidebar);
-  bodyWrap.appendChild(content);
-});
-
 // ── Window controls ─────────────────────────────────────────────────────────
-document.getElementById('btn-min').addEventListener('click',   () => window.api.minimize());
-document.getElementById('btn-max').addEventListener('click',   () => window.api.maximize());
-document.getElementById('btn-close').addEventListener('click', () => window.api.close());
+// (Wired up inside DOMContentLoaded below to avoid null reference)
 
 // ── Navigation ──────────────────────────────────────────────────────────────
-const navBtns = document.querySelectorAll('.nav-btn');
-const pages   = document.querySelectorAll('.page');
-
-navBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const target = btn.dataset.page;
-    navBtns.forEach(b => b.classList.remove('active'));
-    pages.forEach(p  => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById(`page-${target}`).classList.add('active');
-    if (target === 'startup') loadStartupItems();
-  });
-});
+// (Wired up inside DOMContentLoaded below)
+let navBtns, pages;
 
 // ── Toast ────────────────────────────────────────────────────────────────────
-function toast(msg, type = '') {
   const area = document.getElementById('toast-area');
   const el = document.createElement('div');
   el.className = `toast ${type}`;
@@ -150,7 +121,7 @@ document.getElementById('qa-clean-all').addEventListener('click', async () => {
 //  CLEANER PAGE
 // ═══════════════════════════════════════════════════════════════════
 // Checkbox toggle
-document.querySelectorAll('.ore-checkbox').forEach(cb => {
+document.querySelectorAll('.custom-checkbox').forEach(cb => {
   cb.addEventListener('click', e => {
     e.stopPropagation();
     cb.classList.toggle('on');
@@ -158,16 +129,16 @@ document.querySelectorAll('.ore-checkbox').forEach(cb => {
 });
 document.querySelectorAll('.clean-item').forEach(item => {
   item.addEventListener('click', () => {
-    const cb = item.querySelector('.ore-checkbox');
+    const cb = item.querySelector('.custom-checkbox');
     if (cb) cb.classList.toggle('on');
   });
 });
 
 document.getElementById('btn-select-all').addEventListener('click', () => {
-  document.querySelectorAll('.ore-checkbox').forEach(cb => cb.classList.add('on'));
+  document.querySelectorAll('.custom-checkbox').forEach(cb => cb.classList.add('on'));
 });
 document.getElementById('btn-deselect-all').addEventListener('click', () => {
-  document.querySelectorAll('.ore-checkbox').forEach(cb => cb.classList.remove('on'));
+  document.querySelectorAll('.custom-checkbox').forEach(cb => cb.classList.remove('on'));
 });
 
 // Load estimated sizes
@@ -186,7 +157,7 @@ async function loadSizes() {
 // Start cleaning
 document.getElementById('btn-start-clean').addEventListener('click', async () => {
   const selected = [];
-  document.querySelectorAll('.ore-checkbox.on').forEach(cb => {
+  document.querySelectorAll('.custom-checkbox.on').forEach(cb => {
     if (cb.dataset.task) selected.push(cb.dataset.task);
   });
   if (!selected.length) { toast('Select at least one item!', 'warn'); return; }
@@ -256,7 +227,7 @@ async function loadStartupItems() {
         <div class="startup-item-loc">${escHtml(item.Location || '')}</div>
       </div>
       <div class="startup-actions">
-        <button class="ore-btn red-btn small-btn" data-name="${escHtml(item.Name)}" data-loc="${escHtml(item.Location || '')}">🗑 Remove</button>
+        <button class="btn red_btn small_btn" data-name="${escHtml(item.Name)}" data-loc="${escHtml(item.Location || '')}">🗑 Remove</button>
       </div>
     `;
     el.querySelector('button').addEventListener('click', async () => {
@@ -329,7 +300,7 @@ function escHtml(str) {
 
 // ── Init ─────────────────────────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => {
-  // DOM must be set up — fix layout if not already done
+  // ── Layout fix: wrap sidebar + content ──────────────────────────────────
   if (!document.getElementById('body-wrap')) {
     const bodyWrap = document.createElement('div');
     bodyWrap.id = 'body-wrap';
@@ -341,6 +312,26 @@ window.addEventListener('DOMContentLoaded', () => {
     bodyWrap.appendChild(sidebar);
     bodyWrap.appendChild(content);
   }
+
+  // ── Window controls ──────────────────────────────────────────────────────
+  document.getElementById('btn-min').addEventListener('click',   () => window.api.minimize());
+  document.getElementById('btn-max').addEventListener('click',   () => window.api.maximize());
+  document.getElementById('btn-close').addEventListener('click', () => window.api.close());
+
+  // ── Navigation ───────────────────────────────────────────────────────────
+  navBtns = document.querySelectorAll('.nav-btn');
+  pages   = document.querySelectorAll('.page');
+  navBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.page;
+      navBtns.forEach(b => b.classList.remove('active'));
+      pages.forEach(p  => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(`page-${target}`).classList.add('active');
+      if (target === 'startup') loadStartupItems();
+      if (target === 'excludes') loadExcludes();
+    });
+  });
 
   loadDashboard();
   loadSizes();
@@ -480,10 +471,4 @@ document.getElementById('btn-excl-clear').addEventListener('click', async () => 
   toast('All excludes cleared.', 'success');
 });
 
-// ── Navigation: load excludes when switching to excludes page ────────────────
-// Patch navBtns to also load excludes
-navBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    if (btn.dataset.page === 'excludes') loadExcludes();
-  });
-});
+// ── End of renderer ──────────────────────────────────────────────────────────
